@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:sorting_algorithm_visualiser/all_sorting.dart';
 
 
 class ChartWidget extends StatelessWidget {
@@ -75,3 +76,104 @@ class ChartWidget extends StatelessWidget {
     }).toList();
   }
 }
+
+class algoDetails{
+
+ static List<Widget> details=[
+   ListView(
+     //scrollDirection:Axis.vertical,
+     children: [
+       Text('Bubble Sort',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2,),
+       Text('Bubble Sort is the simplest sorting algorithm that works by repeatedly swapping the adjacent elements if they are in wrong order.',
+         style: TextStyle(fontSize: 16),),
+       SizedBox(height: 10,),
+       Text('Complexity',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2),
+       SizedBox(height: 20,),
+       Text('Time: Worst-O(n^2) Average-O(n^2) Best-O(n)\nSpace: O(1)',style: TextStyle(fontSize: 16),),
+       SizedBox(height: 20,),
+       Text('Code',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2),
+       Image.asset('assets/bubblesort.PNG',width: double.infinity,fit: BoxFit.cover,)
+     ],
+   ),
+
+   ListView(
+     children: [
+       Text('Insertion Sort',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2,),
+       Text('Insertion sort is a simple sorting algorithm that works similar to the way you sort playing cards in your hands. The array is virtually split into a sorted and an unsorted part. Values from the unsorted part are picked and placed at the correct position in the sorted part.',
+         style: TextStyle(fontSize: 16),),
+       SizedBox(height: 10,),
+       Text('Complexity',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2),
+       SizedBox(height: 20,),
+       Text('Time: Worst: O(n^2) Best: O(n)',style: TextStyle(fontSize: 16),),
+       SizedBox(height: 20,),
+       Text('Code',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2),
+       Image.asset('assets/insertionsort.PNG',fit: BoxFit.fitWidth,)
+     ],
+   ),
+
+
+   ListView(
+     children: [
+       Text('Selection Sort',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2,),
+       Text('The selection sort algorithm sorts an array by repeatedly finding the minimum element (considering ascending order) from unsorted part and putting it at the beginning. ',
+         style: TextStyle(fontSize: 16),),
+       SizedBox(height: 10,),
+       Text('Complexity',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2),
+       SizedBox(height: 20,),
+       Text('Time: Worst-O(n^2) Average-O(n^2) Best-O(n^2)\nSpace: O(1)',style: TextStyle(fontSize: 16),),
+       SizedBox(height: 20,),
+       Text('Code',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2),
+       Image.asset('assets/selectionsort.PNG')
+     ],
+   ),
+
+
+   ListView(
+     children: [
+       Text('Quick Sort',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2,),
+       Text('QuickSort is a Divide and Conquer algorithm. It picks an element as pivot and partitions the given array around the picked pivot. There are many different versions of quickSort that pick pivot in different ways.',
+         style: TextStyle(fontSize: 16),),
+       SizedBox(height: 10,),
+       Text('Complexity',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2),
+       SizedBox(height: 20,),
+       Text('Time: Worst-O(n^2) Average-O(n*log(n)) Best-O(n*log(n))',style: TextStyle(fontSize: 16),),
+       SizedBox(height: 20,),
+       Text('Code',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2),
+       Image.asset('assets/quicksort.PNG')
+     ],
+   ),
+
+
+   ListView(
+     children: [
+       Text('Heap Sort',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2,),
+       Text('Heap sort is a comparison based sorting technique based on Binary Heap data structure. It is similar to selection sort where we first find the maximum element and place the maximum element at the end. We repeat the same process for the remaining elements.',
+         style: TextStyle(fontSize: 16),),
+       SizedBox(height: 10,),
+       Text('Complexity',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.grey,thickness: 2),
+       SizedBox(height: 20,),
+       Text('Time: Worst-O(n*log(n)) Average-O(n*log(n)) Best-O(n*log(n))',style: TextStyle(fontSize: 16),),
+       SizedBox(height: 20,),
+       Text('Code',style: TextStyle(fontSize: 20,fontWeight:FontWeight.bold),),
+       Divider(color: Colors.white,thickness: 2),
+       Image.asset('assets/heapsort.PNG')
+     ],
+   ),
+
+ ];
+}
+

@@ -1,4 +1,5 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:sorting_algorithm_visualiser/constant.dart';
 
@@ -18,6 +19,7 @@ class _SortingAlgoState extends State<SortingAlgo> {
   double delay = 2000,
       wid = double.infinity;
   int isselected = 1;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +33,18 @@ class _SortingAlgoState extends State<SortingAlgo> {
     }
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.black12,
+      drawerScrimColor: Colors.transparent,
+      endDrawer: Container(height: 550,width: 300,color: Colors.white,child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: algoDetails.details[isselected-1],
+      ),),
+
       body: Container(
+        height:double.infinity,
         child: Column(
+          //direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             isdesktop ? Row(
@@ -47,6 +58,7 @@ class _SortingAlgoState extends State<SortingAlgo> {
                 child: ListView(scrollDirection: Axis.horizontal,
                     children: getList(),
                     physics: ScrollPhysics().parent)),
+
             ChartWidget(
               numbers: numbers,
               activeElements: pointers,
@@ -66,17 +78,33 @@ class _SortingAlgoState extends State<SortingAlgo> {
                 ),
               ),
             ),
-            Center(
-              child: Text(
-                'Speed',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  'Sort Speed',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+                GestureDetector(
+                  onTap:(){ isdesktop?_scaffoldKey.currentState.openEndDrawer():showBottomSheet1();},
+                  child: Text(
+                    'More Info',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.pinkAccent,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
             ),
+
             Container(
+
               width: wid,
               child: Slider(
                 activeColor: Colors.pinkAccent,
@@ -92,7 +120,8 @@ class _SortingAlgoState extends State<SortingAlgo> {
               ),
             ),
 
-            bottombuttons()
+             bottombuttons(),
+
           ],
         ),
       ),
@@ -226,10 +255,11 @@ class _SortingAlgoState extends State<SortingAlgo> {
 
 //-----------------------Heap Sort-----------------------------------
   void heapify(List<int> numbers, int n, int i) async {
+    updateMessage("adjusting heap");
     int largest = i;
     int l = 2 * i + 1;
     int r = 2 * i + 2;
-    updatePointers([l,r]);
+    //updatePointers([l,r]);
     //await Future.delayed(Duration(milliseconds: 3000-delay.toInt()));
     if (l < n && numbers[l] > numbers[largest])
       largest = l;
@@ -237,7 +267,7 @@ class _SortingAlgoState extends State<SortingAlgo> {
       largest = r;
 
     if (largest != i) {
-      updatePointers([largest,i]);
+      //updatePointers([largest,i]);
       int temp = numbers[i];
       numbers[i] = numbers[largest];
       numbers[largest] = temp;
@@ -253,14 +283,20 @@ class _SortingAlgoState extends State<SortingAlgo> {
     for (int i = n ~/ 2 - 1; i >= 0; i--) {
       await Future.delayed(Duration(milliseconds: 3000 - delay.toInt()));
       if (iscancelled) break;
+      updateMessage("building heap");
       heapify(numbers, n, i);
     }
+    updateMessage("heap builded");
+    await Future.delayed(Duration(milliseconds: 3000 - delay.toInt()));
+    updateMessage("now swap ${numbers[0]} & ${numbers[n-1]}");
     updatePointers([0, n - 1]);
     for (int i = n - 1; i >= 0; i--) {
       // Move current root to end
       await Future.delayed(Duration(milliseconds: 3000 - delay.toInt()));
       updatePointers([0, i]);
       if (iscancelled) break;
+      updateMessage("now swap ${numbers[0]} & ${numbers[i]}");
+      await Future.delayed(Duration(milliseconds: 3000 - delay.toInt()));
       int temp = numbers[0];
       numbers[0] = numbers[i];
       numbers[i] = temp;
@@ -286,6 +322,7 @@ class _SortingAlgoState extends State<SortingAlgo> {
     int pivot=numbers[low];
     int i=low,j=high,temp;
     updatePointers([low]);
+    updateMessage("consider ${numbers[low]} pivot");
     await Future.delayed(Duration(milliseconds: 3000 - delay.toInt()));
     while(i<j){
       if(iscancelled) break;
@@ -488,6 +525,7 @@ class _SortingAlgoState extends State<SortingAlgo> {
           onPressed: isSorting ? null : () {
             setState(() {
               isselected = 1;
+              message="";
             });
           },
         ),
@@ -501,6 +539,7 @@ class _SortingAlgoState extends State<SortingAlgo> {
           onPressed: isSorting ? null : () {
             setState(() {
               isselected = 2;
+              message="";
             });
           },
         ),
@@ -514,6 +553,7 @@ class _SortingAlgoState extends State<SortingAlgo> {
           onPressed: isSorting ? null : () {
             setState(() {
               isselected = 3;
+              message="";
             });
           },
         ),
@@ -527,6 +567,7 @@ class _SortingAlgoState extends State<SortingAlgo> {
           onPressed: isSorting ? null : () {
             setState(() {
               isselected = 4;
+              message="";
             });
           },
         ),
@@ -540,11 +581,27 @@ class _SortingAlgoState extends State<SortingAlgo> {
           onPressed: isSorting ? null : () {
             setState(() {
               isselected = 5;
+              message="";
             });
           },
         ),
       ),
     ];
   }
-
+  Future<Widget> showBottomSheet1(){
+   return showModalBottomSheet(
+    isDismissible: true,
+     shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+     backgroundColor: Colors.white,
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 700,
+          decoration:BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(12),topLeft: Radius.circular(12))),
+          padding: const EdgeInsets.all(8.0),
+          child: algoDetails.details[isselected-1],
+        );
+      },
+    );
+  }
 }

@@ -15,10 +15,10 @@ class _SortingDetailsState extends State<SortingDetails> {
     if(wid>500)
       isdesktop=true;
     return Scaffold(
-      appBar: AppBar(title: isdesktop?Text('Sorting Algorithms',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),):Text('Sorting Algorithms'),
+       appBar:AppBar(title: isdesktop? Text('Sorting Algorithms',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),):Text('Sorting Algorithms'),
         toolbarHeight: isdesktop?50:60,
       centerTitle: true,
-      backgroundColor: isdesktop?Colors.black12:Colors.blueAccent,
+      backgroundColor:isdesktop?Colors.black12:Colors.blueAccent,
       elevation: 5,
       ),
       body: SortingAlgo(),
